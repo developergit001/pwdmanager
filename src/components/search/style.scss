@@ -1,0 +1,39 @@
+$defaultFontSize: 17px;
+.searchbar{
+display:flex;
+flex-direction:row;
+padding: 10px;
+background-image: linear-gradient(to bottom, #e9e9e9, #b8b8b8);
+align-items:center;
+}
+.searchbar__left{
+    padding:10px;
+}
+.searchbar__left img{
+max-width:35px;
+}
+.searchbar__middle{
+    padding: 10px;
+}
+.searchbar__middle-input{
+    color: #747474;
+    font-weight: bold;
+    font-size: $defaultFontSize;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    padding-left: 6px;
+}
+.searchbar__right{
+    padding: 10px;
+}
+.searchbar__right-input{
+    color: #747474;
+    font-weight: bold;
+    font-size: $defaultFontSize;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
