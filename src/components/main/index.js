@@ -2,6 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import { useStore, useActions } from "easy-peasy";
 import Page from "./page";
 import Search from "../search";
+import Modal from "../modal";
+
 
 const Main = () => {
   const isLoading = useStore(state => state.isLoading);
@@ -24,6 +26,7 @@ const Main = () => {
           <Search></Search>
           <Page items={items} isLoading={isLoading} ></Page>
         </div>
+        <Modal></Modal>
     </Fragment>
   );
 };

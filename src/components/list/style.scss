@@ -1,8 +1,5 @@
 $defaultFontSize: 20px;
 $BigFontSize: 40px;
-.is-loading{
-
-}
 .no-results{
     color:gray;
     font-weight: bold;
@@ -23,6 +20,7 @@ $BigFontSize: 40px;
     border-top-style: solid;
     border-top-width: 1px;
     border-top-color: #dadada;
+    cursor:pointer;
    }
 .lista__item-img{
  max-width:50px;   
