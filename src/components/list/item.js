@@ -1,9 +1,19 @@
 import React, { Fragment } from "react";
+import { useActions } from "easy-peasy";
+import './style.scss';
 
-function Item(props) {
+const Item = (props) => {
+  const setItem = useActions(actions => actions.setItem);
+  const setModal = useActions(actions => actions.setModal);
+
+  const itemClick = () => {
+    setItem({"id":props.item.id,"title":props.item.fields.title,"field":props.item.fields.field,"value":props.item.fields.value});
+    setModal(true);
+  };
+
   return (
     <Fragment>
-      <div className="lista__main-item" >
+      <div className="lista__main-item" onClick={itemClick} >
         <div className="lista__item-left">
           <img className="lista__item-img" alt={props.item.fields.title} src={props.item.fields.thumb} />
         </div>
@@ -14,5 +24,6 @@ function Item(props) {
       </div>
     </Fragment>
   );
-}
+};
+
 export default Item;

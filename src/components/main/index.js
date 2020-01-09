@@ -7,6 +7,7 @@ import Modal from "../modal";
 
 const Main = () => {
   const isLoading = useStore(state => state.isLoading);
+  const isModal = useStore(state => state.isModal);
   const items = useStore(state => state.items);
   const fetchItems = useActions(actions => actions.fetchItems);
 
@@ -26,7 +27,7 @@ const Main = () => {
           <Search></Search>
           <Page items={items} isLoading={isLoading} ></Page>
         </div>
-        <Modal></Modal>
+        <Modal isModal={isModal} ></Modal>
     </Fragment>
   );
 };

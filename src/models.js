@@ -4,8 +4,25 @@ export default {
   allitems: [],
   items: {"records":[]},
   isLoading: false,
+  isModal: false,
+  currentItem:{"id":"","title":"","field":"","value":""},
   // Thunks
   fetchItems: thunk(async actions => {
+    actions.setLoading(true);
+    const res = await fetch(
+      "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa?maxRecords=1000&view=Grid%20view"
+      , {
+        headers: {
+          "Authorization": "Bearer keyDjaUZF1m1ecYee"
+        }
+      }
+    );
+    const items = await res.json();
+    actions.setLoading(false);
+    actions.setItems(items);
+    actions.resetItems();
+  }),
+  addItem: thunk(async (actions,payload) => {
     actions.setLoading(true);
     const res = await fetch(
       "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa?maxRecords=1000&view=Grid%20view"
@@ -24,8 +41,15 @@ export default {
   setLoading: action((state,flag) => {
     state.isLoading = flag;
   }),
+  setModal: action((state,flag) => {
+    state.isModal = flag;
+  }),
   resetItems: action((state) => {
     state.items = state.allitems;
+  }),
+  setItem: action((state, item) => {
+    console.log(item);
+    state.currentItem = item;
   }),
   setItems: action((state, items) => {
     state.items = items;

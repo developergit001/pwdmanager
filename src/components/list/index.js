@@ -38,8 +38,5 @@ function List(props) {
         </Fragment>
   );  
 
-
-
-
 }
 export default List;
