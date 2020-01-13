@@ -3,8 +3,7 @@ import Item from "./item";
 import iconoLoading from '../../assets/Rolling-1s-200px.svg';
 import './style.scss';
 
-function List(props) {
-  
+const List = (props) => {
   const isEmpty = props.items.records.length === 0;
   const isLoading = props.isLoading;
 
@@ -38,5 +37,6 @@ function List(props) {
         </Fragment>
   );  
 
-}
+};
+
 export default List;

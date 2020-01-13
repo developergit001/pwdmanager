@@ -23,19 +23,37 @@ export default {
     actions.resetItems();
   }),
   addItem: thunk(async (actions,payload) => {
-    actions.setLoading(true);
-    const res = await fetch(
-      "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa?maxRecords=1000&view=Grid%20view"
-      , {
-        headers: {
-          "Authorization": "Bearer keyDjaUZF1m1ecYee"
+
+    if (payload.id !== ""){
+      const res = await fetch(
+        "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa",
+        {
+          method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+          //mode: 'cors', // no-cors, *cors, same-origin          
+          headers: {
+            "Authorization": "Bearer keyDjaUZF1m1ecYee",
+            "Content-Type":"application/json"  
+          },
+          body:{
+            "records":[
+                {
+                  "id":payload.id,
+                  "fields":{
+                    "title":payload.title,
+                    "field":payload.field,
+                    "value":payload.value
+                  },
+                  "typecast": true
+                }
+              ]
+          }
         }
-      }
-    );
-    const items = await res.json();
-    actions.setLoading(false);
-    actions.setItems(items);
-    actions.resetItems();
+      );
+      console.log('res',res);
+      actions.setModal(false);
+      //actions.fetchItems();
+    }
+
   }),
   // Actions
   setLoading: action((state,flag) => {
