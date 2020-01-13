@@ -21,13 +21,18 @@ const Main = () => {
     // eslint-disable-next-line
   }, []);
 
+  let componenteModal = null;
+
+  if (isModal)
+  componenteModal = (<Modal isModal={true} ></Modal>)
+
   return (
     <Fragment>
         <div className="main" >
           <Search></Search>
           <Page items={items} isLoading={isLoading} ></Page>
         </div>
-        <Modal isModal={isModal} ></Modal>
+        {componenteModal}
     </Fragment>
   );
 };
