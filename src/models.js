@@ -51,7 +51,7 @@ export default {
       );
       console.log('res',res);
       actions.setModal(false);
-      //actions.fetchItems();
+      actions.fetchItems();
     }
 
   }),
