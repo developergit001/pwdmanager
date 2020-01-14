@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useStore, useActions } from "easy-peasy";
 import './style.scss';
 import iconClose from '../../assets/close-x.png';
 import iconoLoading from '../../assets/Rolling-1s-200px.svg';
 
-const Modal = ({isModal}) => {
+const Modal = ({isModal,hasError}) => {
   const currentItem = useStore(state => state.currentItem);
   const addItem = useActions(actions => actions.addItem);
   const setModal = useActions(actions => actions.setModal);
+  const setError = useActions(actions => actions.setError);
 
   const [title, setTitle] = useState(currentItem.title); //Valor por defecto en variable title => ""
   const [field, setField] = useState(currentItem.field); //Valor por defecto en variable field => ""
@@ -26,6 +27,7 @@ const Modal = ({isModal}) => {
   }
   const setClose = () => {
     setModal(false);
+    setError(false);
   }
   
   const saveClick = () => {
@@ -40,61 +42,88 @@ const Modal = ({isModal}) => {
         setTitle(currentItem.title);
         setField(currentItem.field);
         setValue(currentItem.value);
+        return () => {
+          console.log("Unmounted!.");
+        }
     },
     [isModal,currentItem]
   );
 
-  const classModal = (isModal)?"modal modal--show":"modal modal--hide";
-  const classLoading = (loading)?"modal__row-send-img":"modal__row-send-img--hide";
-  const classSend = (loading)?"modal__row-send-input--hide":"modal__row-send-input";
+  let componentModal = null;
+  let componentForm = null;
 
-  return (
-    <div className={classModal} >
-        <div className="modal__close" >
-          <div className="modal__close-x" >
-            <img src={iconClose} className="modal__close-img" 
-            onClick={setClose}
-            alt="Cerrar" title="Cerrar" />
-          </div>  
+  if (!hasError){
+    const classLoading = (loading)?"modal__row-send-img":"modal__row-send-img--hide";
+    const classSend = (loading)?"modal__row-send-input--hide":"modal__row-send-input";
+  
+    componentForm = (
+      <Fragment>
+        <div className="modal__row" >
+          <div className="modal__row-left" >Titulo</div>
+          <div className="modal__row-right" >
+              <input className="modal__row-right-input" 
+              onChange={titleChange} 
+              value={title} 
+              />
+          </div>
         </div>
-        <div className="modal__form" >
-            <div className="modal__row" >
-                <div className="modal__row-left" >Titulo</div>
-                <div className="modal__row-right" >
-                    <input className="modal__row-right-input" 
-                    onChange={titleChange} 
-                    value={title} 
-                    />
-                </div>
-            </div>
-            <div className="modal__row" >
-                <div className="modal__row-left" >Campo</div>
-                <div className="modal__row-right" >
-                    <input className="modal__row-right-input" 
-                    onChange={fieldChange} 
-                    value={field}                     
-                    />
-                </div>
-            </div>
-            <div className="modal__row" >
-                <div className="modal__row-left" >Valor</div>
-                <div className="modal__row-right" >
-                    <input className="modal__row-right-input" 
-                    onChange={valueChange} 
-                    value={valuefield}                      
-                    />
-                </div>
-            </div>
-            <div className="modal__row-sep" ></div>
-            <div className="modal__row modal__row--buttons" >
-                <img src={iconoLoading} className={classLoading} alt="Cargando..." />        
-                <input type="button" className={classSend} 
-                onClick={saveClick}  
-                value="Enviar" />
+        <div className="modal__row" >
+            <div className="modal__row-left" >Campo</div>
+            <div className="modal__row-right" >
+                <input className="modal__row-right-input" 
+                onChange={fieldChange} 
+                value={field}                     
+                />
             </div>
         </div>
-    </div>
-  );
+        <div className="modal__row" >
+            <div className="modal__row-left" >Valor</div>
+            <div className="modal__row-right" >
+                <input className="modal__row-right-input" 
+                onChange={valueChange} 
+                value={valuefield}                      
+                />
+            </div>
+        </div>
+        <div className="modal__row-sep" ></div>
+        <div className="modal__row modal__row--buttons" >
+            <img src={iconoLoading} className={classLoading} alt="Cargando..." />        
+            <input type="button" className={classSend} 
+            onClick={saveClick}  
+            value="Enviar" />
+        </div>
+      </Fragment>
+    )
+  } else {
+    componentForm = (
+      <Fragment>
+        <div className="modal__message" >
+          <div className="modal__message--big" >¡Ups!</div><br/>
+          <div className="modal__message--medium" >Algo sali&oacute; mal</div><br/>
+          <div className="modal__message--small" >verifique que su key y nombre de tabla sean v&aacute;lidas.</div>
+        </div>
+      </Fragment>
+    )
+  }
+
+    componentModal = (
+      (
+        <div className="modal modal--show" >
+            <div className="modal__close" >
+              <div className="modal__close-x" >
+                <img src={iconClose} className="modal__close-img" 
+                onClick={setClose}
+                alt="Cerrar" title="Cerrar" />
+              </div>  
+            </div>
+            <div className="modal__form" >
+              {componentForm}
+            </div>
+        </div>
+      )
+    )
+
+  return componentModal;
 };
 
 export default Modal;

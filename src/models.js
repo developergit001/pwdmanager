@@ -5,22 +5,33 @@ export default {
   items: {"records":[]},
   isLoading: false,
   isModal: false,
+  hasError: false,
   currentItem:{"id":"","title":"","field":"","value":""},
   // Thunks
   fetchItems: thunk(async actions => {
-    actions.setLoading(true);
-    const res = await fetch(
-      "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa?maxRecords=1000&view=Grid%20view"
-      , {
-        headers: {
-          "Authorization": "Bearer keyDjaUZF1m1ecYee"
+    try{
+
+      actions.setLoading(true);
+      const res = await fetch(
+        "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa?maxRecords=1000&view=Grid%20view"
+        , {
+          headers: {
+            "Authorization": "Bearer keyDjaUZF1m1ecYee"
+          }
         }
-      }
-    );
-    const items = await res.json();
-    actions.setLoading(false);
-    actions.setItems(items);
-    actions.resetItems();
+      );
+      const items = await res.json();
+      actions.setLoading(false);
+      actions.setItems(items);
+      actions.resetItems();
+
+    }catch(e){
+
+      actions.setLoading(false);
+      actions.setError(true);
+    
+    }
+    
   }),
   addItem: thunk(async (actions,payload) => {
     const obj = {
@@ -37,20 +48,30 @@ export default {
     };
 
     if (payload.id !== ""){
-      const res = await fetch(
-        "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa",
-        {
-          method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-          //mode: 'cors', // no-cors, *cors, same-origin          
-          headers: {
-            "Authorization": "Bearer keyDjaUZF1m1ecYee",
-            "Content-Type":"application/json"  
-          },
-          body:JSON.stringify(obj)
-        }
-      );
-      actions.setModal(false);
-      actions.fetchItems();
+      try{
+          await fetch("https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa",
+            {
+              method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+              //mode: 'cors', // no-cors, *cors, same-origin          
+              headers: {
+                "Authorization": "Bearer keyDjaUZF1m1ecYee",
+                "Content-Type":"application/json"  
+              },
+              body:JSON.stringify(obj)
+            }
+          );
+
+        actions.setModal(false);
+        actions.fetchItems();
+
+      }catch(err){
+        
+        actions.setModal(false);
+        actions.setError(true);
+
+      }
+
+
     }
 
   }),
@@ -60,6 +81,9 @@ export default {
   }),
   setModal: action((state,flag) => {
     state.isModal = flag;
+  }),
+  setError: action((state,flag) => {
+    state.hasError = flag;
   }),
   resetItems: action((state) => {
     state.items = state.allitems;

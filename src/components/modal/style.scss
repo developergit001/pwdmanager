@@ -39,6 +39,23 @@ $defaultFontSize: 17px;
     -moz-border-radius: 50px;
     border-radius: 50px;    
 }
+.modal__message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.modal__message--big{
+    font-size: 70px;
+    font-weight:bold;
+}
+.modal__message--medium{
+    font-size: 22px;
+    font-weight:bold;
+}
+.modal__message--small{
+    font-size: 12px;
+    font-weight:bold;
+}
 .modal__row{
     display:flex;
     flex-direction:row;

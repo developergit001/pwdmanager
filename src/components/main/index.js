@@ -8,6 +8,7 @@ import Modal from "../modal";
 const Main = () => {
   const isLoading = useStore(state => state.isLoading);
   const isModal = useStore(state => state.isModal);
+  const hasError = useStore(state => state.hasError);
   const items = useStore(state => state.items);
   const fetchItems = useActions(actions => actions.fetchItems);
 
@@ -23,8 +24,8 @@ const Main = () => {
 
   let componenteModal = null;
 
-  if (isModal)
-  componenteModal = (<Modal isModal={true} ></Modal>)
+  if (isModal || hasError)
+  componenteModal = (<Modal isModal={true} hasError={hasError} />);
 
   return (
     <Fragment>
