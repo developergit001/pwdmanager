@@ -29,7 +29,7 @@ const Modal = ({isModal}) => {
   }
   
   const saveClick = () => {
-    const obj = {title,field,valuefield}
+    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield}
     setLoading(true);
     addItem(obj);
   };

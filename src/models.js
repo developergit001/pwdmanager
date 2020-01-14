@@ -23,6 +23,18 @@ export default {
     actions.resetItems();
   }),
   addItem: thunk(async (actions,payload) => {
+    const obj = {
+      "records":[
+          {
+            "id":payload.id,
+            "fields":{
+              "title":payload.title,
+              "field":payload.field,
+              "value":payload.value
+            }
+          }
+        ]
+    };
 
     if (payload.id !== ""){
       const res = await fetch(
@@ -34,22 +46,9 @@ export default {
             "Authorization": "Bearer keyDjaUZF1m1ecYee",
             "Content-Type":"application/json"  
           },
-          body:{
-            "records":[
-                {
-                  "id":payload.id,
-                  "fields":{
-                    "title":payload.title,
-                    "field":payload.field,
-                    "value":payload.value
-                  },
-                  "typecast": true
-                }
-              ]
-          }
+          body:JSON.stringify(obj)
         }
       );
-      console.log('res',res);
       actions.setModal(false);
       actions.fetchItems();
     }
@@ -66,7 +65,6 @@ export default {
     state.items = state.allitems;
   }),
   setItem: action((state, item) => {
-    console.log(item);
     state.currentItem = item;
   }),
   setItems: action((state, items) => {
