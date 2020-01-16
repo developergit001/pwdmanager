@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useActions } from "easy-peasy";
 import './style.scss';
 import iconoSearch from '../../assets/active-search.svg';
+import iconoKey from '../../assets/changekey.png';
 
 const Search = () => {
   const [filter, cleanFilter] = useState(""); //Valor por defecto en variable filter => ""
   const searchText = useActions(actions => actions.searchText);
   const resetItems = useActions(actions => actions.resetItems);
-  
+  const setItem = useActions(actions => actions.setItem);
+  const setModal = useActions(actions => actions.setModal);
   
   const textoChange = (e) => {
     let texto = e.target.value;
@@ -24,7 +26,10 @@ const Search = () => {
     cleanFilter("");
     resetItems();
   };
-
+  const addClick = () => {
+    setItem({"id":"","title":"","field":"","value":"","thumb":""});
+    setModal(true);
+  };
   return (
     <div className="searchbar" >
         <div className="searchbar__left">
@@ -43,7 +48,13 @@ const Search = () => {
                 onClick={limpiarClick} 
                 value="Limpiar texto" 
             />
-        </div>    
+        </div>
+        <div className="searchbar__right-add" onClick={addClick} >+</div>
+        <div className="searchbar__right-changekey">
+            <img src={iconoKey} className="searchbar__rigth-img-changekey" 
+            alt="cambiar key de Airtable y contraseña" 
+            title="cambiar key de Airtable y contraseña" />
+        </div>        
     </div>
   );
 };

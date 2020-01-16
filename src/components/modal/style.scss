@@ -54,7 +54,7 @@ $defaultFontSize: 17px;
 }
 .modal__message--small{
     font-size: 12px;
-    font-weight:bold;
+    color:gray;
 }
 .modal__row{
     display:flex;
@@ -112,5 +112,5 @@ $defaultFontSize: 17px;
 }
 .modal__row-right{
     padding:10px;
-    flex:2;
+    flex:5;
 }

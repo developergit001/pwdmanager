@@ -6,7 +6,7 @@ export default {
   isLoading: false,
   isModal: false,
   hasError: false,
-  currentItem:{"id":"","title":"","field":"","value":""},
+  currentItem:{"id":"","title":"","field":"","value":"","thumb":"","comment":""},
   // Thunks
   fetchItems: thunk(async actions => {
     try{
@@ -34,43 +34,46 @@ export default {
     
   }),
   addItem: thunk(async (actions,payload) => {
-    const obj = {
+    let method = "POST";
+    let obj = {
       "records":[
           {
-            "id":payload.id,
+            //"id":payload.id,
             "fields":{
               "title":payload.title,
               "field":payload.field,
-              "value":payload.value
+              "value":payload.value,
+              "thumb":payload.thumb
             }
           }
         ]
     };
-
+    
     if (payload.id !== ""){
-      try{
-          await fetch("https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa",
-            {
-              method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-              //mode: 'cors', // no-cors, *cors, same-origin          
-              headers: {
-                "Authorization": "Bearer keyDjaUZF1m1ecYee",
-                "Content-Type":"application/json"  
-              },
-              body:JSON.stringify(obj)
-            }
-          );
+      obj.records[0]["id"] = payload.id;
+      method = "PATCH";
+    }
 
-        actions.setModal(false);
-        actions.fetchItems();
+    try{
+        await fetch("https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa",
+          {
+            method: method, // *GET, POST, PUT, DELETE, etc.
+            //mode: 'cors', // no-cors, *cors, same-origin          
+            headers: {
+              "Authorization": "Bearer keyDjaUZF1m1ecYee",
+              "Content-Type":"application/json"  
+            },
+            body:JSON.stringify(obj)
+          }
+        );
 
-      }catch(err){
-        
-        actions.setModal(false);
-        actions.setError(true);
+      actions.setModal(false);
+      actions.fetchItems();
 
-      }
-
+    } catch(err){
+      
+      actions.setModal(false);
+      actions.setError(true);
 
     }
 
@@ -90,6 +93,9 @@ export default {
   }),
   setItem: action((state, item) => {
     state.currentItem = item;
+  }),
+  setThumb: action((state, thumb) => {
+    state.currentItem.thumb = thumb;
   }),
   setItems: action((state, items) => {
     state.items = items;

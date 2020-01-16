@@ -13,6 +13,9 @@ const Modal = ({isModal,hasError}) => {
   const [title, setTitle] = useState(currentItem.title); //Valor por defecto en variable title => ""
   const [field, setField] = useState(currentItem.field); //Valor por defecto en variable field => ""
   const [valuefield, setValue] = useState(currentItem.value); //Valor por defecto en variable valuefield => ""
+  const [thumb, setThumb] = useState(currentItem.thumb); //Valor por defecto en variable 
+  
+  
   const [loading, setLoading] = useState(false);
 
 
@@ -25,23 +28,29 @@ const Modal = ({isModal,hasError}) => {
   const valueChange = (e) => {
     setValue(e.target.value);
   }
+  const thumbChange = (e) => {
+    setThumb(e.target.value);
+  }
   const setClose = () => {
     setModal(false);
     setError(false);
   }
   
   const saveClick = () => {
-    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield}
+    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield,"thumb":thumb}
     setLoading(true);
     addItem(obj);
   };
 
   useEffect(
     () => {
+        console.log(currentItem.thumb);
         setLoading(false);
         setTitle(currentItem.title);
         setField(currentItem.field);
         setValue(currentItem.value);
+        setThumb(currentItem.thumb);
+
         return () => {
           console.log("Unmounted!.");
         }
@@ -61,7 +70,8 @@ const Modal = ({isModal,hasError}) => {
         <div className="modal__row" >
           <div className="modal__row-left" >Titulo</div>
           <div className="modal__row-right" >
-              <input className="modal__row-right-input" 
+              <input className="modal__row-right-input"
+              placeholder="Ingrese un título" 
               onChange={titleChange} 
               value={title} 
               />
@@ -71,6 +81,7 @@ const Modal = ({isModal,hasError}) => {
             <div className="modal__row-left" >Campo</div>
             <div className="modal__row-right" >
                 <input className="modal__row-right-input" 
+                placeholder="Ingrese un campo" 
                 onChange={fieldChange} 
                 value={field}                     
                 />
@@ -80,11 +91,26 @@ const Modal = ({isModal,hasError}) => {
             <div className="modal__row-left" >Valor</div>
             <div className="modal__row-right" >
                 <input className="modal__row-right-input" 
+                placeholder="Ingrese un valor" 
                 onChange={valueChange} 
                 value={valuefield}                      
                 />
             </div>
         </div>
+
+        <div className="modal__row" >
+            <div className="modal__row-left" >Miniatura</div>
+            <div className="modal__row-right" >
+                <input className="modal__row-right-input" 
+                placeholder="Ej: #000000 - black - data:image/png;base64,iVB....." 
+                onChange={thumbChange} 
+                value={thumb}                      
+                />
+            </div>
+        </div>
+
+
+
         <div className="modal__row-sep" ></div>
         <div className="modal__row modal__row--buttons" >
             <img src={iconoLoading} className={classLoading} alt="Cargando..." />        
