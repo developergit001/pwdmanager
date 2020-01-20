@@ -3,6 +3,7 @@ import { useStore, useActions } from "easy-peasy";
 import './style.scss';
 import iconClose from '../../assets/close-x.png';
 import iconoLoading from '../../assets/Rolling-1s-200px.svg';
+import PickColor from '../misc/pickcolor.js';
 
 const Modal = ({isModal,hasError}) => {
   const currentItem = useStore(state => state.currentItem);
@@ -13,11 +14,8 @@ const Modal = ({isModal,hasError}) => {
   const [title, setTitle] = useState(currentItem.title); //Valor por defecto en variable title => ""
   const [field, setField] = useState(currentItem.field); //Valor por defecto en variable field => ""
   const [valuefield, setValue] = useState(currentItem.value); //Valor por defecto en variable valuefield => ""
-  const [thumb, setThumb] = useState(currentItem.thumb); //Valor por defecto en variable 
-  
-  
+  const [thumb, setThumb] = useState(currentItem.thumb); //Valor por defecto en variable thumb
   const [loading, setLoading] = useState(false);
-
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -35,7 +33,6 @@ const Modal = ({isModal,hasError}) => {
     setModal(false);
     setError(false);
   }
-  
   const saveClick = () => {
     const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield,"thumb":thumb}
     setLoading(true);
@@ -67,6 +64,14 @@ const Modal = ({isModal,hasError}) => {
   
     componentForm = (
       <Fragment>
+
+        <div className="modal__row" >
+            <div className="modal__row-left" >Color</div>
+            <div className="modal__row-right" >
+              <PickColor />
+            </div>
+        </div>
+
         <div className="modal__row" >
           <div className="modal__row-left" >Titulo</div>
           <div className="modal__row-right" >
@@ -108,8 +113,6 @@ const Modal = ({isModal,hasError}) => {
                 />
             </div>
         </div>
-
-
 
         <div className="modal__row-sep" ></div>
         <div className="modal__row modal__row--buttons" >

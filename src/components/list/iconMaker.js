@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 
 const IconMaker = (props) => {
-  console.log(props);
   const thumb = props.thumb;
   const letter = props.title.substr(0,1).toUpperCase();
 

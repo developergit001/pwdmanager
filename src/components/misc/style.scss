@@ -1,0 +1,13 @@
+.pick-color{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap //contenido multi linea flex
+}
+.pick-color__palette{
+    width:30px;
+    height:30px;
+    border-radius:30px;
+    cursor:pointer;
+    margin:5px;
+}
+.pick-color__palette--sel{border:1px solid black;}

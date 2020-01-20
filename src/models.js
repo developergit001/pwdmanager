@@ -6,7 +6,7 @@ export default {
   isLoading: false,
   isModal: false,
   hasError: false,
-  currentItem:{"id":"","title":"","field":"","value":"","thumb":"","comment":""},
+  currentItem:{"id":"","title":"","field":"","value":"","thumb":"","color":"","comment":""},
   // Thunks
   fetchItems: thunk(async actions => {
     try{
@@ -43,7 +43,8 @@ export default {
               "title":payload.title,
               "field":payload.field,
               "value":payload.value,
-              "thumb":payload.thumb
+              "thumb":payload.thumb,
+              "color":payload.color
             }
           }
         ]
@@ -96,6 +97,9 @@ export default {
   }),
   setThumb: action((state, thumb) => {
     state.currentItem.thumb = thumb;
+  }),
+  setCurrentItem: action((state, currentItem) => {
+    state.currentItem = currentItem;
   }),
   setItems: action((state, items) => {
     state.items = items;
