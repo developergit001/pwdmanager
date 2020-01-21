@@ -34,7 +34,7 @@ const Modal = ({isModal,hasError}) => {
     setError(false);
   }
   const saveClick = () => {
-    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield,"thumb":thumb}
+    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield,"thumb":thumb,"color":currentItem.color}
     setLoading(true);
     addItem(obj);
   };

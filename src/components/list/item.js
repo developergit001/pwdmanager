@@ -8,7 +8,7 @@ const Item = (props) => {
   const setModal = useActions(actions => actions.setModal);
 
   const itemClick = () => {
-    setItem({"id":props.item.id,"title":props.item.fields.title,"field":props.item.fields.field,"value":props.item.fields.value,"thumb":props.item.fields.thumb});
+    setItem({"id":props.item.id,"title":props.item.fields.title,"field":props.item.fields.field,"value":props.item.fields.value,"thumb":props.item.fields.thumb,"color":props.item.fields.color});
     setModal(true);
   };
 
