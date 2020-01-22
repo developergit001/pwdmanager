@@ -8,7 +8,7 @@ const Item = (props) => {
   const setModal = useActions(actions => actions.setModal);
 
   const itemClick = () => {
-    setItem({"id":props.item.id,"title":props.item.fields.title,"field":props.item.fields.field,"value":props.item.fields.value,"thumb":props.item.fields.thumb,"color":props.item.fields.color});
+    setItem({"id":props.item.id,"title":props.item.fields.title,"field":props.item.fields.field,"value":props.item.fields.value,"comment":props.item.fields.comment,"thumb":props.item.fields.thumb,"color":props.item.fields.color});
     setModal(true);
   };
 
@@ -16,7 +16,7 @@ const Item = (props) => {
     <Fragment>
       <div className="lista__main-item" onClick={itemClick} >
         <div className="lista__item-left">
-          <IconMaker title={props.item.fields.title} thumb={props.item.fields.thumb} />
+          <IconMaker title={props.item.fields.title} thumb={props.item.fields.thumb} color={props.item.fields.color} />
         </div>
         <div className="lista__item-right">
           <div className="lista__item-top-right" >{props.item.fields.title}</div>

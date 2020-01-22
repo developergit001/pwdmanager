@@ -84,6 +84,14 @@ $defaultFontSize: 17px;
     font-weight: bold;
     height: 25px;   
 }
+.modal__row-right-input--textarea{
+    resize:none;
+    height:50px;
+    padding-left: 20px;
+}
+.modal__row-right-thumb{
+    max-width:50px;
+}
 .modal__row-send-input{
     color: black;
     font-weight: bold;
@@ -110,7 +118,31 @@ $defaultFontSize: 17px;
     color:#44433e;
     font-weight: bold;
 }
+.modal__row-left-imgalt{
+    color:#a9a7a8;
+    font-size:12px;
+}
+.modal__row-left-noimage{
+    width: 40px;
+    height: 60px;
+    border: 1px solid gray;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    padding-bottom: 3px;
+    padding-left: 10px;
+    font-size: 40px;
+}
+.modal__row-left-noimage-text{
+    margin-left:20px;
+}
 .modal__row-right{
     padding:10px;
     flex:5;
+}
+.modal__row-right-preview{
+    display:flex;
+    flex-direction:row;
 }

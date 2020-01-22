@@ -43,6 +43,7 @@ export default {
               "title":payload.title,
               "field":payload.field,
               "value":payload.value,
+              "comment":payload.comment,
               "thumb":payload.thumb,
               "color":payload.color
             }

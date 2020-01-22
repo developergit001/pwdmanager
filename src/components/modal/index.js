@@ -15,7 +15,10 @@ const Modal = ({isModal,hasError}) => {
   const [field, setField] = useState(currentItem.field); //Valor por defecto en variable field => ""
   const [valuefield, setValue] = useState(currentItem.value); //Valor por defecto en variable valuefield => ""
   const [thumb, setThumb] = useState(currentItem.thumb); //Valor por defecto en variable thumb
+  const [comment, setComment] = useState(currentItem.comment); //Valor por defecto en variable comment
+
   const [loading, setLoading] = useState(false);
+  const [nopreview, setNoPreview] = useState(false);
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -29,15 +32,30 @@ const Modal = ({isModal,hasError}) => {
   const thumbChange = (e) => {
     setThumb(e.target.value);
   }
+  const commentChange = (e) => {
+    setComment(e.target.value);
+  }
   const setClose = () => {
     setModal(false);
     setError(false);
   }
   const saveClick = () => {
-    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield,"thumb":thumb,"color":currentItem.color}
+    if (nopreview)
+    setThumb("");
+    const obj = {"id":currentItem.id,"title":title,"field":field,"value":valuefield,"comment":comment,"thumb":thumb,"color":currentItem.color}
     setLoading(true);
     addItem(obj);
   };
+
+  const setErrorImg = () => {
+    setNoPreview(true);
+  };
+  const setLoadImg = () => {
+    setNoPreview(false);
+  };
+  const previewBlur = () => {
+    setNoPreview(false);
+  };  
 
   useEffect(
     () => {
@@ -47,6 +65,7 @@ const Modal = ({isModal,hasError}) => {
         setField(currentItem.field);
         setValue(currentItem.value);
         setThumb(currentItem.thumb);
+        setComment(currentItem.comment);
 
         return () => {
           console.log("Unmounted!.");
@@ -57,6 +76,22 @@ const Modal = ({isModal,hasError}) => {
 
   let componentModal = null;
   let componentForm = null;
+  let componentPreview = (
+    <Fragment>
+      <div className="modal__row-left-noimage" >:(</div>
+      <div className="modal__row-left-noimage-text" >Imagen no cargada.</div>
+    </Fragment>
+  ); 
+  
+  if (!nopreview){
+    componentPreview = (
+      <img className="modal__row-right-thumb" 
+      src={thumb} 
+      onError={setErrorImg} 
+      onLoad={setLoadImg} 
+      alt="Imagen previsualizada" />
+    );
+  }
 
   if (!hasError){
     const classLoading = (loading)?"modal__row-send-img":"modal__row-send-img--hide";
@@ -102,18 +137,36 @@ const Modal = ({isModal,hasError}) => {
                 />
             </div>
         </div>
-
         <div className="modal__row" >
-            <div className="modal__row-left" >Miniatura</div>
+            <div className="modal__row-left" >Comentario</div>
+            <div className="modal__row-right" >
+                <textarea className="modal__row-right-input modal__row-right-input--textarea" 
+                placeholder="Ingrese un comentario" 
+                onChange={commentChange}                   
+                value={comment} ></textarea>
+            </div>
+        </div>        
+        <div className="modal__row" >
+            <div className="modal__row-left" >
+              Miniatura<br/>
+              <span className="modal__row-left-imgalt" >Base64 o URL</span>
+            </div>
             <div className="modal__row-right" >
                 <input className="modal__row-right-input" 
                 placeholder="Ej: #000000 - black - data:image/png;base64,iVB....." 
                 onChange={thumbChange} 
+                onBlur={previewBlur}
                 value={thumb}                      
                 />
             </div>
         </div>
 
+        <div className="modal__row" >
+            <div className="modal__row-left" >Preview</div>
+            <div className="modal__row-right modal__row-right-preview" >
+                {componentPreview}
+            </div>
+        </div>
         <div className="modal__row-sep" ></div>
         <div className="modal__row modal__row--buttons" >
             <img src={iconoLoading} className={classLoading} alt="Cargando..." />        

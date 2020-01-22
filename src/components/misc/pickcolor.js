@@ -29,12 +29,17 @@ const PickColor = () => {
   
   useEffect(
     () => {
+        if (currentItem.color === "" || currentItem.color === undefined){
+          let tmpcurrentItem = currentItem;
+          tmpcurrentItem.color = colors[0];
+          setCurrentItem(tmpcurrentItem);        
+        }
         setColor(currentItem.color);
         return () => {
           console.log("Unmounted!.");
         }
     },
-    [currentItem.color]
+    [currentItem,colors,setCurrentItem]
   );
 
   let colorBlock = null;
