@@ -1,20 +1,39 @@
-import React, { Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 const IconMaker = (props) => {
-  const thumb = props.thumb;
-  const color = props.color;
+  const [imgerror, setImgError] = useState(false);
+  const [block, setBlock] = useState(null);
 
-  let outBlock = null;
-  if (thumb.indexOf("base64","") > -1 || thumb.indexOf("http","") > -1){
-    outBlock = (<img className="lista__item-img" alt="Imagen logo" src={thumb} />);
-  } else {
-    const styleColor = {color:color};
-  outBlock = (<div className="lista__item-icontext" style={styleColor} >{props.title.substr(0,1).toUpperCase()}</div>);
+  useEffect(
+    () => {
+      const thumb = props.thumb;
+      let outBlock = null;
+      if ((imgerror === false) && (thumb.indexOf("base64","") > -1 || thumb.indexOf("http","") > -1)){
+        console.log("entro imgerror false "+props.title);
+        outBlock = (<img className="lista__item-img" onError={imgError} alt="Imagen logo" src={thumb} />);
+      
+      } else {
+        let color = props.color;
+        console.log("entro imgerror true "+props.title);
+        if (color === undefined || color === null || color === "")
+        color = "black";
+    
+        const styleColor = {color:color};
+        outBlock = (<div className="lista__item-icontext" style={styleColor} >{props.title.substr(0,1).toUpperCase()}</div>);
+      }
+      setBlock(outBlock);
+
+    },
+    [imgerror,props]
+  );
+
+  function imgError() {
+    setImgError(true);
   }
-
+    
   return (
     <Fragment>
-        {outBlock}
+        {block}
     </Fragment>
   );
 };
