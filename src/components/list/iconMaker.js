@@ -8,7 +8,7 @@ const IconMaker = (props) => {
     () => {
       const thumb = props.thumb;
       let outBlock = null;
-      if ((imgerror === false) && (thumb.indexOf("base64","") > -1 || thumb.indexOf("http","") > -1)){
+      if ((thumb) && (imgerror === false) && (thumb.indexOf("base64","") > -1 || thumb.indexOf("http","") > -1)){
         console.log("entro imgerror false "+props.title);
         outBlock = (<img className="lista__item-img" onError={imgError} alt="Imagen logo" src={thumb} />);
       
@@ -19,7 +19,9 @@ const IconMaker = (props) => {
         color = "black";
     
         const styleColor = {color:color};
-        outBlock = (<div className="lista__item-icontext" style={styleColor} >{props.title.substr(0,1).toUpperCase()}</div>);
+        let ptitle = props.title;
+        if (!ptitle) ptitle = "";
+        outBlock = (<div className="lista__item-icontext" style={styleColor} >{ptitle.substr(0,1).toUpperCase()}</div>);
       }
       setBlock(outBlock);
 

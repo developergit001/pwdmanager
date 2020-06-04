@@ -5,7 +5,7 @@ $defaultFontSize: 17px;
     position:fixed;
     top:0;
     left:0;
-    background-color:rgba(241, 242, 243, 0.93); //:#f1f2f3;
+    background-color:rgba(241, 242, 243, 0.98); //:#f1f2f3;
     align-items: center;
     justify-content: baseline;
 }
@@ -23,7 +23,7 @@ $defaultFontSize: 17px;
     justify-content: flex-end;
 }
 .modal__close-img{
-    max-width:50px;
+    max-width:30px;
     padding-right: 10px;
     padding-top: 10px;
     cursor:pointer;
@@ -34,7 +34,7 @@ $defaultFontSize: 17px;
     display:flex;
     flex-direction:column;
     padding: 20px;
-    margin-top:15px;
+    margin-top:0px;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;    
