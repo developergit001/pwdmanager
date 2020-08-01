@@ -13,10 +13,10 @@ export default {
 
       actions.setLoading(true);
       const res = await fetch(
-        "https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa?maxRecords=1000&view=Grid%20view"
+        "https://api.airtable.com/v0/xx/tablepwa?maxRecords=1000&view=Grid%20view"
         , {
           headers: {
-            "Authorization": "Bearer keyDjaUZF1m1ecYee"
+            "Authorization": "Bearer xx"
           }
         }
       );
@@ -57,12 +57,12 @@ export default {
     }
 
     try{
-        await fetch("https://api.airtable.com/v0/appHkUfrydZC57rUf/tablepwa",
+        await fetch("https://api.airtable.com/v0/xx/tablepwa",
           {
             method: method, // *GET, POST, PUT, DELETE, etc.
             //mode: 'cors', // no-cors, *cors, same-origin          
             headers: {
-              "Authorization": "Bearer keyDjaUZF1m1ecYee",
+              "Authorization": "Bearer xx",
               "Content-Type":"application/json"  
             },
             body:JSON.stringify(obj)
